@@ -72,6 +72,11 @@ def create_app():
         
         return jsonify(novo_item)
         
+    @app.route('/item/<id>', methods=['DELETE'])
+    def delete_item(id):        
+        collection.delete_one({ '_id' : ObjectId(id) })
+        
+        return jsonify(f"Item deletado: {id}"), 200
         
         
     return app
