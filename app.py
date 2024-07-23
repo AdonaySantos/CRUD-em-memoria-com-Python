@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for
+from flask import Flask, request, jsonify, render_template
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import ipython_config
@@ -25,8 +25,8 @@ def create_app():
     
     # Endpoint Read All [GET] /item
     @app.route('/item', methods=['GET'])
-    async def show_items():
-        itens  = await list(collection.find())
+    def show_items():
+        itens  = list(collection.find())
         
         for item in itens:
             item['_id'] = str(item['_id'])
