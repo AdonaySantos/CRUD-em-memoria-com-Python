@@ -61,6 +61,16 @@ def create_app():
         except Exception as e:
             return jsonify({"error" : 'Body da requisição imcompleto'}), 400
         
+    @app.route('/item/<id>', methods=['PUT'])
+    def update_item(id):
+        novo_item = request.json
+        
+        collection.update_one(
+            { "_id" : ObjectId(id) },
+            { "$set" : novo_item }
+        )
+        
+        return jsonify(novo_item)
         
         
         
