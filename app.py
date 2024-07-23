@@ -33,7 +33,21 @@ def create_app():
         
         return jsonify(itens)
     
+    # Endpoint Read By ID [GET] /item/<id>
+    @app.route('/item/<id>', methods=['GET'])
+    def show_item(id):
+        try:
+            item = collection.find_one({ "_id" : ObjectId(id)})
+            item['_id'] = str(item['_id'])
+            
+            return jsonify(item)
+        
+        except Exception as e:
+            return jsonify({"error": str(e)}),  404
+        
     return app
+
+
 
 if __name__ == '__main__':
     app = create_app()
