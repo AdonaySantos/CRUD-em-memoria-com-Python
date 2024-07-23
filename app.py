@@ -43,7 +43,26 @@ def create_app():
             return jsonify(item)
         
         except Exception as e:
-            return jsonify({"error": str(e)}),  404
+            return jsonify({"error": str(e)}),  404  
+    
+    # Endpoint Create [POST] criado
+    @app.route('/item', methods=['POST'])
+    def create_item():
+        try:
+            novo_item = request.json
+        
+            collection.insert_one(novo_item)
+        
+            if novo_item:
+                novo_item['_id'] = str(novo_item['_id'])
+        
+            return jsonify(novo_item), 201
+        
+        except Exception as e:
+            return jsonify({"error" : 'Body da requisição imcompleto'}), 400
+        
+        
+        
         
     return app
 
