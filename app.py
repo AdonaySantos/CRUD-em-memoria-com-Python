@@ -23,6 +23,16 @@ def create_app():
         except Exception as e:
             return jsonify({"error": f"Erro ao acessar a coleção: {e}"}), 500
     
+    # Endpoint Read All [GET] /item
+    @app.route('/item', methods=['GET'])
+    async def show_items():
+        itens  = await list(collection.find())
+        
+        for item in itens:
+            item['_id'] = str(item['_id'])
+        
+        return jsonify(itens)
+    
     return app
 
 if __name__ == '__main__':
